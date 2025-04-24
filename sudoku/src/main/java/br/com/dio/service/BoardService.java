@@ -37,5 +37,8 @@ public class BoardService {
     public static List<List<Space>> getSpaces(){
         return board.getSpaces();
     }
+    public static boolean changeValue(final int col, final int row, final int value){
+        return board.changeValue(col, row, value);
+    }
 
 }

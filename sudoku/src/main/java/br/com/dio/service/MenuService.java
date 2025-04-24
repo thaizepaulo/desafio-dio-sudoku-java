@@ -28,6 +28,7 @@ public class MenuService {
 
             switch (option){
                 case 1 -> startGameMenu(gameConfig);
+                case 2 -> inputNumber();
                 case 4 -> showCurrentGame();
                 case 8 -> System.exit(0);
                 default -> System.out.println("Opção inválida, selecione uma das opções do menu");
@@ -36,21 +37,23 @@ public class MenuService {
     }
 
     private static void startGameMenu(final Map<String, String> gameConfig) {
-        if (!boardIsNull()){
-            System.out.println("O jogo já foi iniciado.");
-            return;
-        }
+        if (validateIfBoardIsNull()) return;
 
         startGame(gameConfig);
         System.out.println("O jogo foi iniciado.");
         showCurrentGame();
     }
 
-    private static void showCurrentGame() {
-        if (boardIsNull()){
-            System.out.println("O jogo ainda não foi iniciado iniciado");
-            return;
+    private static boolean validateIfBoardIsNull() {
+        if (!boardIsNull()){
+            System.out.println("O jogo já foi iniciado.");
+            return true;
         }
+        return false;
+    }
+
+    private static void showCurrentGame() {
+        if (validateIfBoardIsNotNull()) return;
 
         System.out.println("Seu jogo se encontra da seguinte forma");
         System.out.printf((BOARD_TEMPLATE) + "\n", getArgs());
@@ -65,6 +68,40 @@ public class MenuService {
             }
         }
         return args;
+    }
+
+    private static void inputNumber() {
+        if (validateIfBoardIsNotNull()) return;
+
+        System.out.println("Informe a coluna que em que o número será inserido");
+        var col = runUntilGetValidNumber(0, 8);
+        System.out.println("Informe a linha que em que o número será inserido");
+        var row = runUntilGetValidNumber(0, 8);
+        System.out.printf("Informe o número que vai entrar na posição [%s,%s]\n", col, row);
+        var value = runUntilGetValidNumber(1, 9);
+        if (!changeValue(col, row, value)){
+            System.out.printf("A posição [%s,%s] tem um valor fixo\n", col, row);
+            return;
+        }
+        System.out.println("O jogo foi atualizado.");
+        showCurrentGame();
+    }
+
+    private static boolean validateIfBoardIsNotNull() {
+        if (boardIsNull()){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
+            return true;
+        }
+        return false;
+    }
+
+    private static int runUntilGetValidNumber(final int min, final int max){
+        var current = scanner.nextInt();
+        while (current < min || current > max){
+            System.out.printf("Informe um número entre %s e %s\n", min, max);
+            current = scanner.nextInt();
+        }
+        return current;
     }
 
 }
