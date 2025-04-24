@@ -58,4 +58,12 @@ public class BoardService {
         board.reset();
     }
 
+    public static boolean gameIsFinished(){
+        return board.gameIsFinished();
+    }
+
+    public static void setBoardNull() {
+        board = null;
+    }
+
 }

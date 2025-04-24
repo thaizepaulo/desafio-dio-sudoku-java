@@ -33,6 +33,7 @@ public class MenuService {
                 case 4 -> showCurrentGame();
                 case 5 -> showGameStatus();
                 case 6 -> clearGame();
+                case 7 -> finishGame();
                 case 8 -> System.exit(0);
                 default -> System.out.println("Opção inválida, selecione uma das opções do menu");
             }
@@ -78,21 +79,6 @@ public class MenuService {
         showCurrentGame();
     }
 
-    private static void clearGame() {
-        if (validateIfBoardIsNotNull()) return;
-
-        System.out.println("Tem certeza que deseja limpar seu jogo e perder todo seu progresso?");
-        var confirm = scanner.next();
-        while (!confirm.equalsIgnoreCase("sim") && !confirm.equalsIgnoreCase("não")){
-            System.out.println("Informe 'sim' ou 'não'");
-            confirm = scanner.next();
-        }
-
-        if(confirm.equalsIgnoreCase("sim")){
-            reset();
-        }
-    }
-
     private static void showCurrentGame() {
         if (validateIfBoardIsNotNull()) return;
 
@@ -121,6 +107,36 @@ public class MenuService {
             System.out.println("O jogo não contém erros");
         }
     }
+
+    private static void clearGame() {
+        if (validateIfBoardIsNotNull()) return;
+
+        System.out.println("Tem certeza que deseja limpar seu jogo e perder todo seu progresso?");
+        var confirm = scanner.next();
+        while (!confirm.equalsIgnoreCase("sim") && !confirm.equalsIgnoreCase("não")){
+            System.out.println("Informe 'sim' ou 'não'");
+            confirm = scanner.next();
+        }
+
+        if(confirm.equalsIgnoreCase("sim")){
+            reset();
+        }
+    }
+
+    private static void finishGame() {
+        if (validateIfBoardIsNotNull()) return;
+
+        if (gameIsFinished()){
+            System.out.println("Parabéns você concluiu o jogo");
+            showCurrentGame();
+            setBoardNull();
+        } else if (hasErrors()) {
+            System.out.println("Seu jogo contém erros, verifique seu board e ajuste-o");
+        } else {
+            System.out.println("Você ainda precisa preencher algum espaço");
+        }
+    }
+
 
     private static boolean validateIfBoardIsNull() {
         if (!boardIsNull()){
