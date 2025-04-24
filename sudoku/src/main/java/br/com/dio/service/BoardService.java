@@ -41,4 +41,9 @@ public class BoardService {
         return board.changeValue(col, row, value);
     }
 
+    public static boolean clearValue(final int col, final int row){
+        return board.clearValue(col, row);
+    }
+
+
 }

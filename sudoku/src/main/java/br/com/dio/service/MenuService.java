@@ -29,6 +29,7 @@ public class MenuService {
             switch (option){
                 case 1 -> startGameMenu(gameConfig);
                 case 2 -> inputNumber();
+                case 3 -> removeNumber();
                 case 4 -> showCurrentGame();
                 case 8 -> System.exit(0);
                 default -> System.out.println("Opção inválida, selecione uma das opções do menu");
@@ -83,7 +84,21 @@ public class MenuService {
             System.out.printf("A posição [%s,%s] tem um valor fixo\n", col, row);
             return;
         }
-        System.out.println("O jogo foi atualizado.");
+        System.out.printf("O número %s foi incluído na posição [%s,%s].\n", value, col, row);
+        showCurrentGame();
+    }
+
+    private static void removeNumber() {
+        if (validateIfBoardIsNotNull()) return;
+
+        System.out.println("Informe a coluna que em que o número será removido");
+        var col = runUntilGetValidNumber(0, 8);
+        System.out.println("Informe a linha que em que o número será removido");
+        var row = runUntilGetValidNumber(0, 8);
+        if (!clearValue(col, row)){
+            System.out.printf("A posição [%s,%s] tem um valor fixo\n", col, row);
+        }
+        System.out.printf("O número da posição [%s,%s] foi excluído.\n", col, row);
         showCurrentGame();
     }
 
