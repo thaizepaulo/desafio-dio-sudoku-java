@@ -12,7 +12,7 @@ public class Main {
         final var gameConfig = Stream.of(args)
                 .collect(toMap(k -> k.split(";")[0], v -> v.split(";")[1]));
 
-        createMenu();
+        createMenu(gameConfig);
 
     }
 }

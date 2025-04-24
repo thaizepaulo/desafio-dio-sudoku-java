@@ -1,12 +1,15 @@
 package br.com.dio.service;
 
+import java.util.Map;
 import java.util.Scanner;
+
+import static br.com.dio.service.BoardService.*;
 
 public class MenuService {
 
     private final static Scanner scanner = new Scanner(System.in);
 
-    public static void createMenu() {
+    public static void createMenu(final Map<String, String> gameConfig) {
         var option = -1;
         while (true){
             System.out.println("Selecione uma das opções a seguir");
@@ -22,10 +25,21 @@ public class MenuService {
             option = scanner.nextInt();
 
             switch (option){
+                case 1 -> startGameMenu(gameConfig);
                 case 8 -> System.exit(0);
                 default -> System.out.println("Opção inválida, selecione uma das opções do menu");
             }
         }
+    }
+
+    private static void startGameMenu(final Map<String, String> gameConfig) {
+        if (!boardIsNull()){
+            System.out.println("O jogo já foi iniciado.");
+            return;
+        }
+
+        startGame(gameConfig);
+        System.out.println("O jogo foi iniciado.");
     }
 
 }
