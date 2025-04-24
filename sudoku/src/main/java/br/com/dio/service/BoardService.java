@@ -12,7 +12,7 @@ import static java.util.Objects.isNull;
 public class BoardService {
 
     private static Board board;
-    private final static int BOARD_LIMIT = 9;
+    final static int BOARD_LIMIT = 9;
 
     public static boolean boardIsNull(){
         return isNull(board);
@@ -34,5 +34,8 @@ public class BoardService {
         board = new Board(spaces);
     }
 
+    public static List<List<Space>> getSpaces(){
+        return board.getSpaces();
+    }
 
 }

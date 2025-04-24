@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static br.com.dio.service.BoardService.*;
+import static br.com.dio.template.BoardTemplate.BOARD_TEMPLATE;
+import static java.util.Objects.isNull;
 
 public class MenuService {
 
@@ -26,6 +28,7 @@ public class MenuService {
 
             switch (option){
                 case 1 -> startGameMenu(gameConfig);
+                case 4 -> showCurrentGame();
                 case 8 -> System.exit(0);
                 default -> System.out.println("Opção inválida, selecione uma das opções do menu");
             }
@@ -40,6 +43,28 @@ public class MenuService {
 
         startGame(gameConfig);
         System.out.println("O jogo foi iniciado.");
+        showCurrentGame();
+    }
+
+    private static void showCurrentGame() {
+        if (boardIsNull()){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
+            return;
+        }
+
+        System.out.println("Seu jogo se encontra da seguinte forma");
+        System.out.printf((BOARD_TEMPLATE) + "\n", getArgs());
+    }
+
+    private static Object[] getArgs() {
+        var args = new Object[81];
+        var argPos = 0;
+        for (int i = 0; i < BOARD_LIMIT; i++) {
+            for (var col: getSpaces()){
+                args[argPos ++] = " " + ((isNull(col.get(i).getActual())) ? " " : col.get(i).getActual());
+            }
+        }
+        return args;
     }
 
 }
