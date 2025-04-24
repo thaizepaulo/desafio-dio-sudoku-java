@@ -160,7 +160,16 @@ public class MenuService {
     }
 
     private static int runUntilGetValidNumber(final int min, final int max){
-        var current = scanner.nextInt();
+        var current = -1;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                current = scanner.nextInt();
+                break;
+            } else {
+                System.out.printf("Informe um número entre %s e %s\n", min, max);
+                scanner.next();
+            }
+        }
         while (current < min || current > max){
             System.out.printf("Informe um número entre %s e %s\n", min, max);
             current = scanner.nextInt();
