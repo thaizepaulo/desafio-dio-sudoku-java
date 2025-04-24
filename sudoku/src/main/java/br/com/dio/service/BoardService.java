@@ -54,4 +54,8 @@ public class BoardService {
         return board.hasErrors();
     }
 
+    public static void reset() {
+        board.reset();
+    }
+
 }

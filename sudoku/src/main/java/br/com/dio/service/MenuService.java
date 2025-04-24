@@ -32,6 +32,7 @@ public class MenuService {
                 case 3 -> removeNumber();
                 case 4 -> showCurrentGame();
                 case 5 -> showGameStatus();
+                case 6 -> clearGame();
                 case 8 -> System.exit(0);
                 default -> System.out.println("Opção inválida, selecione uma das opções do menu");
             }
@@ -75,6 +76,21 @@ public class MenuService {
         }
         System.out.printf("O número da posição [%s,%s] foi excluído.\n", col, row);
         showCurrentGame();
+    }
+
+    private static void clearGame() {
+        if (validateIfBoardIsNotNull()) return;
+
+        System.out.println("Tem certeza que deseja limpar seu jogo e perder todo seu progresso?");
+        var confirm = scanner.next();
+        while (!confirm.equalsIgnoreCase("sim") && !confirm.equalsIgnoreCase("não")){
+            System.out.println("Informe 'sim' ou 'não'");
+            confirm = scanner.next();
+        }
+
+        if(confirm.equalsIgnoreCase("sim")){
+            reset();
+        }
     }
 
     private static void showCurrentGame() {
