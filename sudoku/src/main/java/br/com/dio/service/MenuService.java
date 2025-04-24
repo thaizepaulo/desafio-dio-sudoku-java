@@ -24,7 +24,12 @@ public class MenuService {
             System.out.println("7 - Finalizar jogo");
             System.out.println("8 - Sair");
 
-            option = scanner.nextInt();
+            if (scanner.hasNextInt()) {
+                option = scanner.nextInt();
+            } else {
+                option = -1;
+                scanner.next();
+            }
 
             switch (option){
                 case 1 -> startGameMenu(gameConfig);
