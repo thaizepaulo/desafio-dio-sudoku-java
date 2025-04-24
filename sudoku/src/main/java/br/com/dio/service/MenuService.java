@@ -31,6 +31,7 @@ public class MenuService {
                 case 2 -> inputNumber();
                 case 3 -> removeNumber();
                 case 4 -> showCurrentGame();
+                case 5 -> showGameStatus();
                 case 8 -> System.exit(0);
                 default -> System.out.println("Opção inválida, selecione uma das opções do menu");
             }
@@ -43,32 +44,6 @@ public class MenuService {
         startGame(gameConfig);
         System.out.println("O jogo foi iniciado.");
         showCurrentGame();
-    }
-
-    private static boolean validateIfBoardIsNull() {
-        if (!boardIsNull()){
-            System.out.println("O jogo já foi iniciado.");
-            return true;
-        }
-        return false;
-    }
-
-    private static void showCurrentGame() {
-        if (validateIfBoardIsNotNull()) return;
-
-        System.out.println("Seu jogo se encontra da seguinte forma");
-        System.out.printf((BOARD_TEMPLATE) + "\n", getArgs());
-    }
-
-    private static Object[] getArgs() {
-        var args = new Object[81];
-        var argPos = 0;
-        for (int i = 0; i < BOARD_LIMIT; i++) {
-            for (var col: getSpaces()){
-                args[argPos ++] = " " + ((isNull(col.get(i).getActual())) ? " " : col.get(i).getActual());
-            }
-        }
-        return args;
     }
 
     private static void inputNumber() {
@@ -100,6 +75,43 @@ public class MenuService {
         }
         System.out.printf("O número da posição [%s,%s] foi excluído.\n", col, row);
         showCurrentGame();
+    }
+
+    private static void showCurrentGame() {
+        if (validateIfBoardIsNotNull()) return;
+
+        System.out.println("Seu jogo se encontra da seguinte forma");
+        System.out.printf((BOARD_TEMPLATE) + "\n", getArgs());
+    }
+
+    private static Object[] getArgs() {
+        var args = new Object[81];
+        var argPos = 0;
+        for (int i = 0; i < BOARD_LIMIT; i++) {
+            for (var col: getSpaces()){
+                args[argPos ++] = " " + ((isNull(col.get(i).getActual())) ? " " : col.get(i).getActual());
+            }
+        }
+        return args;
+    }
+
+    private static void showGameStatus() {
+        if (validateIfBoardIsNotNull()) return;
+
+        System.out.printf("O jogo atualmente se encontra no status %s\n", getStatus().getLabel());
+        if(hasErrors()){
+            System.out.println("O jogo contém erros");
+        } else {
+            System.out.println("O jogo não contém erros");
+        }
+    }
+
+    private static boolean validateIfBoardIsNull() {
+        if (!boardIsNull()){
+            System.out.println("O jogo já foi iniciado.");
+            return true;
+        }
+        return false;
     }
 
     private static boolean validateIfBoardIsNotNull() {
